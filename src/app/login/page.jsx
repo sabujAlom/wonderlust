@@ -9,12 +9,19 @@ import {
   Form,
   Input,
   Label,
+  Separator,
   TextField,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
 import React from "react";
+import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
+  const handleGoogleSignin = async () => {
+        const data = await authClient.signIn.social({
+          provider: "google",
+        });
+      };
 
     const onSubmit = async (e) =>{
         e.preventDefault();
@@ -97,6 +104,16 @@ const LoginPage = () => {
             </Button>
           </div>
         </Form>
+         <div className="flex justify-center items-center gap-3">
+                  <Separator />
+                  <div className="whitespace-nowrap">Or sign up with</div>
+                  <Separator />
+                </div>
+                <div>
+                  <Button onClick={handleGoogleSignin} variant="outline" className={"w-full rounded-none"}>
+                    <FcGoogle /> Sign in ith Google
+                  </Button>
+                </div>
       </Card>
     </div>
   );

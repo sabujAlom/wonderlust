@@ -56,7 +56,7 @@ const Navbar = () => {
       </Avatar>
          </li>
          <li>
-           <Button variant="danger" className={'rounded-none'}>
+           <Button onClick={async() => {await authClient.signOut()}} variant="danger" className={'rounded-none'}>
               Logout
            </Button>
          </li>

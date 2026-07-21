@@ -9,37 +9,42 @@ import {
   Form,
   Input,
   Label,
+  Separator,
   TextField,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
 import React from "react";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUpPage = () => {
 
-    const onSubmit = async (e) =>{
-        e.preventDefault();
+   const handleGoogleSignin = async () => {
+      const data = await authClient.signIn.social({
+        provider: "google",
+      });
+    };
+    
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-        const formData = new FormData(e.currentTarget)
-        const user = Object.fromEntries(formData.entries());
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
 
-        const {data, error} = await authClient.signUp.email({
-            email: user.email,
-            password: user.password,
-            name: user.name,
-            image: user.image
-        })
-        
-        if(data){
-            redirect("/");
-        }
-        if(error){
-            alert("error")
-        }
+    const { data, error } = await authClient.signUp.email({
+      email: user.email,
+      password: user.password,
+      name: user.name,
+      image: user.image,
+    });
 
-        
+    if (data) {
+      redirect("/");
+    }
+    if (error) {
+      alert("error");
     }
 
-
+  };
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -108,6 +113,16 @@ const SignUpPage = () => {
             </Button>
           </div>
         </Form>
+        <div className="flex justify-center items-center gap-3">
+          <Separator />
+          <div className="whitespace-nowrap">Or sign up with</div>
+          <Separator />
+        </div>
+        <div>
+          <Button onClick={handleGoogleSignin} variant="outline" className={"w-full rounded-none"}>
+            <FcGoogle /> Sign in ith Google
+          </Button>
+        </div>
       </Card>
     </div>
   );
